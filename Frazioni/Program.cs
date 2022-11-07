@@ -1,10 +1,4 @@
-﻿using System.ComponentModel.Design;
-using System.Diagnostics.CodeAnalysis;
-using System.Runtime.CompilerServices;
-using System.Runtime.ExceptionServices;
-using System.Xml.Schema;
-
-namespace Frazioni;
+﻿namespace Frazioni;
 
 public class Fraction
 {
@@ -49,6 +43,7 @@ public class Fraction
     {
         int n = (f1.Numerator*f2.Denominator) + (f2.Numerator*f1.Denominator);
         int d = (f1.Denominator * f2.Denominator);
+
         return new Fraction(n, d);
     }
 
@@ -56,6 +51,7 @@ public class Fraction
     {
         int n = (f1.Numerator * f2.Denominator) - (f2.Numerator * f1.Denominator);
         int d = (f1.Denominator * f2.Denominator);
+
         return new Fraction(n, d);
     }
 
@@ -82,10 +78,8 @@ public class Fraction
 
     public static Fraction operator /(Fraction f, int n)
     {
-        if (n == 0)
-        {
-            throw new ArgumentException("Cannot divide by 0");
-        }
+        if (n == 0){ throw new ArgumentException("Cannot divide by 0"); }
+        
         return new Fraction(f.Numerator, f.Denominator * n);
     }
 
@@ -129,17 +123,15 @@ public class Fraction
 
     public int ToInt()
     {
-        if (Denominator != 1)
-        {
-            throw new ArgumentException("Cannot convert to int, denominator is not 1");
-        }
+        if (Denominator != 1) { throw new ArgumentException("Cannot convert to int, denominator is not 1"); }
+        
         return Numerator;
     }
 
     public override string ToString()
     {
-        if (Denominator == 1)
-        { return Numerator.ToString(); }
+        if (Denominator == 1) { return Numerator.ToString(); }
+        
         return Numerator.ToString() + "/" + Denominator.ToString();
     }
     public int Numerator { get; }

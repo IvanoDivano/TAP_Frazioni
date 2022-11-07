@@ -1,6 +1,4 @@
-using System.Runtime.InteropServices;
 using Frazioni;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel.DataCollection;
 
 namespace Test_Frazioni;
 
@@ -15,10 +13,14 @@ public class Tests
     [Test]
     public void TestFractionSimplyfyFunction()
     {
-        var f1 = new Fraction(1, 2);
-        var f2 = new Fraction(2, 4);
 
-        Assert.That(f1.Equals(f2), Is.EqualTo(true));
+        var f = new Fraction(2, 4);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(f.Numerator, Is.EqualTo(1));
+            Assert.That(f.Denominator, Is.EqualTo(2));
+        });
     }
 
 
