@@ -1,34 +1,38 @@
+using System.Net.WebSockets;
 using System.Runtime.InteropServices;
-using Frazioni;
+using Frazioni_IvanoDivano;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.DataCollection;
 
-namespace Test_Frazioni;
+namespace Test_Frazioni_IvanoDivano;
 
 public class Tests
 {
     [Test]
-    public void TestFractionConstructorWithDenominatorZero()
+    public void TestFractionConstructorWithDenominatorZero([Random(-100, 100, 3)] int n)
     {
-        Assert.That(() => new Fraction(35, 0), Throws.ArgumentException);
+        Assert.That(() => new Fraction(n, 0), Throws.ArgumentException);
     }
 
     [Test]
-    public void TestFractionSimplyfyFunction()
+    public void TestFractionSimplyfyFunction([Random(-100, 100, 5)] int x)
     {
-        var f1 = new Fraction(1, 2);
-        var f2 = new Fraction(2, 4);
+        var f = new Fraction(2*x, 7*x);
 
-        Assert.That(f1.Equals(f2), Is.EqualTo(true));
-    }
-
-
-    [Test]
-    public void TestFractionConstructorWithNegativeDenominator()
-    {
-        var actual = new Fraction(1, -1);
         Assert.Multiple(() =>
         {
-            Assert.That(actual.Numerator, Is.EqualTo(-1));
+            Assert.That(f.Numerator, Is.EqualTo(2));
+            Assert.That(f.Denominator, Is.EqualTo(7));
+        });
+    }
+
+
+    [Test]
+    public void TestFractionConstructorWithNegativeDenominator([Random(-100, 100, 5)] int n)
+    {
+        var actual = new Fraction(n, -1);
+        Assert.Multiple(() =>
+        {
+            Assert.That(actual.Numerator, Is.EqualTo(-n));
             Assert.That(actual.Denominator, Is.EqualTo(1));
         });
     }
@@ -97,12 +101,11 @@ public class Tests
     }
 
     [Test]
-    public void TestFractionMultiplicationWithZero()
+    public void TestFractionMultiplicationWithZero([Random(-100, 100, 3)] int n, [Random(-100, 100, 1)] int d)
     {
-        var operand1 = new Fraction(42, 1);
-        var operand2 = 0;
+        var operand1 = new Fraction(n, d);
 
-        var result = operand1 * operand2;
+        var result = operand1 * 0;
         Assert.Multiple(() =>
         {
             Assert.That(result.Numerator, Is.EqualTo(0));
@@ -128,42 +131,42 @@ public class Tests
     }
 
     [Test]
-    public void TestFractionMethodEqualsWithSimplification()
+    public void TestFractionMethodEqualsWithSimplification([Random(-100, 100, 3)]int x)
     {
         var f1 = new Fraction(1, 2);
-        var f2 = new Fraction(2, 4);
+        var f2 = new Fraction(1*x, 2*x);
 
         Assert.That(f1.Equals(f2), Is.True);
     }
     [Test]
-    public void TestFractionToString()
+    public void TestFractionToStringWithDenominator()
     {
-        var f = new Fraction(11, 5);
+        var f = new Fraction(2, 4);
 
-        Assert.That(f.ToString(), Is.EqualTo("11/5"));
+        Assert.That(f.ToString(), Is.EqualTo("1/2"));
     }
     [Test]
-    public void TestFractionToStringWithDenominator1()
+    public void TestFractionToStringWithDenominator1([Values(-2, 2)] int n, [Random(1, 100, 5)] int x)
     {
-        var f = new Fraction(22, 11);
+        var f = new Fraction(n*x, 1*x);
 
-        Assert.That(f.ToString(), Is.EqualTo("2"));
+        Assert.That(f.ToString(), Is.EqualTo(n.ToString()));
     }
     [Test]
-    public void TestFractionToStringWithDenominatorNegative1()
+    public void TestFractionToStringWithDenominatorNegative1([Values(-2, 2)] int n, [Random(-100, -1, 5)] int x)
     {
-        var f = new Fraction(22, -11);
+        var f = new Fraction(n*x, 1*x);
 
-        Assert.That(f.ToString(), Is.EqualTo("-2"));
+        Assert.That(f.ToString(), Is.EqualTo(n.ToString()));
     }
     [Test]
-    public void TestIntToFraction()
+    public void TestIntToFraction([Random(-100, 100, 3)] int n)
     {
-        var f = new Fraction(42);
+        var f = new Fraction(n);
 
         Assert.Multiple(() =>
         {
-            Assert.That(f.Numerator, Is.EqualTo(42));
+            Assert.That(f.Numerator, Is.EqualTo(n));
             Assert.That(f.Denominator, Is.EqualTo(1));
         });
     }
@@ -179,11 +182,11 @@ public class Tests
         });
     }
     [Test]
-    public void TestFractionToInt()
+    public void TestFractionToInt([Random(-100, 100, 5)] int n)
     {
-        var f = new Fraction(42, 1);
+        var f = new Fraction(n, 1);
 
-        Assert.That(f.ToInt(), Is.EqualTo(42));
+        Assert.That(f.ToInt(), Is.EqualTo(n));
     }
     [Test]
     public void TestFractionToIntException()

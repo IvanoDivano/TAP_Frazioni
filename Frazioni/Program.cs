@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.ExceptionServices;
 using System.Xml.Schema;
 
-namespace Frazioni;
+namespace Frazioni_IvanoDivano;
 
 public class Fraction
 {
